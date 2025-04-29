@@ -1,15 +1,10 @@
-const { withSentryConfig } = require("@sentry/nextjs");
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Your Next.js configuration
-  reactStrictMode: true,
+// next.config.js
+module.exports = {
+  experimental: {
+    clientTraceMetadata: false,
+  },
+  webpack(config) {
+    config.resolve.alias['webworker-threads'] = require.resolve('./mocks/webworker-threads.js');
+    return config;
+  },
 };
-
-module.exports = withSentryConfig(
-  nextConfig,
-  {
-    // Sentry options
-    silent: true, // Suppresses Sentry logs during build
-  }
-);

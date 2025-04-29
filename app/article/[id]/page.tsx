@@ -2,13 +2,12 @@ import { notFound } from 'next/navigation';
 import { getArticleById } from '../../../lib/db';
 import CommentSection from '@/components/CommentSection';
 import VoiceNarration from '@/components/VoiceNarration';
-import { type NextPage } from 'next';
 
 type ArticlePageProps = {
   params: { id: string };
 };
 
-const ArticlePage: NextPage<ArticlePageProps> = async ({ params }: ArticlePageProps) => {
+const ArticlePage: any = async ({ params }: ArticlePageProps) => {
   const article = await getArticleById(params.id);
 
   if (!article) {
