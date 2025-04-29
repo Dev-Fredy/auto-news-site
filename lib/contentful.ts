@@ -1,6 +1,7 @@
 import { createClient } from 'contentful';
 import contentfulManagement from 'contentful-management';
 
+
 if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_DELIVERY_TOKEN) {
   throw new Error('Contentful configuration missing: SPACE_ID or DELIVERY_TOKEN not defined');
 }

@@ -2,12 +2,13 @@ import { notFound } from 'next/navigation';
 import { getArticleById } from '../../../lib/db';
 import CommentSection from '@/components/CommentSection';
 import VoiceNarration from '@/components/VoiceNarration';
+import { type NextPage } from 'next';
 
-interface ArticlePageProps {
+type ArticlePageProps = {
   params: { id: string };
-}
+};
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
+const ArticlePage: NextPage<ArticlePageProps> = async ({ params }: ArticlePageProps) => {
   const article = await getArticleById(params.id);
 
   if (!article) {
@@ -35,3 +36,5 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     </div>
   );
 }
+
+export default ArticlePage;
