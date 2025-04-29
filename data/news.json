@@ -1,0 +1,31 @@
+{
+  "articles": [
+    {
+      "id": "1",
+      "title": "Tech Giant Releases New AI Model",
+      "summary": "A leading tech company unveiled a new AI model with advanced capabilities.",
+      "category": "Technology",
+      "url": "https://example.com/tech-news",
+      "source": "Tech Daily",
+      "createdAt": "2025-04-29T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "title": "Election Results Announced",
+      "summary": "The latest election results show a surprising outcome in key states.",
+      "category": "Politics",
+      "url": "https://example.com/politics-news",
+      "source": "Politics Weekly",
+      "createdAt": "2025-04-29T09:00:00Z"
+    },
+    {
+      "id": "3",
+      "title": "New Smartphone Hits the Market",
+      "summary": "A new smartphone with cutting-edge features is now available.",
+      "category": "Technology",
+      "url": "https://example.com/smartphone-news",
+      "source": "Gadget News",
+      "createdAt": "2025-04-29T08:00:00Z"
+    }
+  ]
+}

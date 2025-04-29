@@ -1,30 +1,37 @@
-import { NextSeo } from "next-seo";
-import NewsCard from "@/components/NewsCard";
-import CommentSection from "@/components/CommentSection";
-import SocialShare from "@/components/SocialShare";
-import { getArticleById } from "@/lib/db";
+import { notFound } from 'next/navigation';
+import { getArticleById } from '../../../lib/db';
+import CommentSection from '@/components/CommentSection';
+import VoiceNarration from '@/components/VoiceNarration';
 
-export default async function ArticlePage({ params }: { params: { id: string } }) {
+interface ArticlePageProps {
+  params: { id: string };
+}
+
+export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = await getArticleById(params.id);
-  if (!article) return <div>Article not found</div>;
+
+  if (!article) {
+    notFound();
+  }
 
   return (
-    <>
-      <NextSeo
-        title={`${article.title} | Automated News Site`}
-        description={article.summary}
-        openGraph={{
-          url: `${process.env.NEXT_PUBLIC_BASE_URL}/article/${article._id}`,
-          title: article.title,
-          description: article.summary,
-          images: [{ url: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.jpg` }],
-        }}
-      />
-      <div className="max-w-3xl mx-auto">
-        <NewsCard article={article} />
-        <SocialShare url={`${process.env.NEXT_PUBLIC_BASE_URL}/article/${article._id}`} title={article.title} />
-        <CommentSection articleId={article._id} />
-      </div>
-    </>
+    <div className="max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+        Category: {article.category} | Source: {article.source} |{' '}
+        {new Date(article.createdAt).toLocaleDateString()}
+      </p>
+      <p className="text-lg mb-4">{article.summary}</p>
+      <VoiceNarration text={article.summary} />
+      <a
+        href={article.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 hover:underline mb-6 block"
+      >
+        Read full article
+      </a>
+      <CommentSection articleId={article._id} />
+    </div>
   );
 }

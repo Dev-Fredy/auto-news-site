@@ -1,64 +1,73 @@
 "use client";
+
 import { useState } from "react";
-import { useUser, SignOutButton } from "@clerk/nextjs";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import PreferencesModal from "./PreferencesModal";
-import SearchBar from "./SearchBar";
-import { Menu } from "lucide-react";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   const { isSignedIn } = useUser();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(true);
+
+  const toggleDarkMode = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle("dark");
+  };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
-      <Link href="/" className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-        ANS
-      </Link>
-      <div className="hidden md:flex items-center space-x-4">
-        <SearchBar />
-        <Link href="/" className="hover:text-blue-600">Home</Link>
-        <Link href="/dashboard" className="hover:text-blue-600">Dashboard</Link>
-        {isSignedIn ? (
-          <>
-            <PreferencesModal />
-            <SignOutButton>
-              <Button variant="outline">Sign Out</Button>
-            </SignOutButton>
-          </>
-        ) : (
-          <Link href="/sign-in">
-            <Button>Sign In</Button>
-          </Link>
-        )}
-      </div>
-      <div className="md:hidden">
-        <Button variant="ghost" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
-          <Menu />
-        </Button>
-      </div>
-      {isMenuOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-800 shadow md:hidden">
-          <div className="flex flex-col p-4 space-y-2">
-            <SearchBar />
-            <Link href="/" className="hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link href="/dashboard" className="hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
-            {isSignedIn ? (
-              <>
-                <PreferencesModal />
+    <motion.nav
+      initial={{ y: -50 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-blue-600 text-white p-4 shadow-lg"
+    >
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-xl font-bold">Futuristic ANS</h1>
+        <ul className="flex space-x-4 items-center">
+          <li>
+            <a href="/" className="hover:underline">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="/category/Technology" className="hover:underline">
+              Technology
+            </a>
+          </li>
+          <li>
+            <a href="/category/Politics" className="hover:underline">
+              Politics
+            </a>
+          </li>
+          {isSignedIn ? (
+            <>
+              <li>
+                <a href="/admin" className="hover:underline">
+                  Admin
+                </a>
+              </li>
+              <li>
                 <SignOutButton>
-                  <Button variant="outline">Sign Out</Button>
+                  <button className="hover:underline">Sign Out</button>
                 </SignOutButton>
-              </>
-            ) : (
-              <Link href="/sign-in">
-                <Button>Sign In</Button>
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
-    </nav>
+              </li>
+            </>
+          ) : (
+            <li>
+              <SignInButton mode="modal">
+                <button className="hover:underline">Sign In</button>
+              </SignInButton>
+            </li>
+          )}
+          <li>
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700"
+            >
+              {isDark ? "☀️" : "🌙"}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </motion.nav>
   );
 }

@@ -1,77 +1,30 @@
-
-'use client'
-
-import { ClerkProvider } from "@clerk/nextjs";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { NextSeo } from "next-seo";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import ThemeToggle from "../components/ThemeToggle";
-import "../app/globals.css";
-import { initSentry } from "../lib/sentry";
-import { useEffect } from "react";
+import type { Metadata } from 'next';
+import './globals.css';
+import { ClerkProvider } from '@clerk/nextjs';
+import Navbar from '@/components/Navbar';
+import { initSentry } from '@/lib/sentry';
 
 initSentry();
 
-const queryClient = new QueryClient();
+export const metadata: Metadata = {
+  title: 'Futuristic ANS',
+  description: 'A next-generation automated news platform',
+  openGraph: {
+    title: 'Futuristic ANS',
+    description: 'Discover the future of news with AI-powered features',
+    url: process.env.NEXT_PUBLIC_BASE_URL,
+  },
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <QueryClientProvider client={queryClient}>
-        <html lang="en" suppressHydrationWarning>
-          <head>
-            <NextSeo
-              title="Automated News Site"
-              description="AI-powered news aggregation with custom summaries and voice narration"
-              openGraph={{
-                url: process.env.NEXT_PUBLIC_BASE_URL,
-                title: "Automated News Site",
-                description: "Stay updated with AI-generated news summaries",
-                images: [{ url: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.jpg` }],
-              }}
-            />
-            <link rel="manifest" href="/manifest.json" />
-            <script type="application/ld+json">
-              {JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                name: "Automated News Site",
-                url: process.env.NEXT_PUBLIC_BASE_URL,
-                potentialAction: {
-                  "@type": "SearchAction",
-                  target: `${process.env.NEXT_PUBLIC_BASE_URL}/search?q={search_term_string}`,
-                  "query-input": "required name=search_term_string",
-                },
-              })}
-            </script>
-          </head>
-          <body className="flex min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-800 dark:to-gray-900 transition-colors">
-            <Sidebar />
-            <div className="flex-1 flex flex-col">
-              <Navbar />
-              <main className="p-6" role="main">
-                {children}
-              </main>
-              <ThemeToggle />
-            </div>
-            <ClientSideSetup />
-          </body>
-        </html>
-      </QueryClientProvider>
+      <html lang="en">
+        <body className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+          <Navbar />
+          <main className="container mx-auto px-4 py-8">{children}</main>
+        </body>
+      </html>
     </ClerkProvider>
   );
-}
-
-function ClientSideSetup() {
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/service-worker.js");
-    }
-  }, []);
-  return null;
 }
