@@ -10,28 +10,28 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.21.0",
-    "@sentry/nextjs": "^7.55.0",
+    "@sentry/nextjs": "^9.15.0",
     "@upstash/redis": "^1.20.0",
     "contentful": "^10.0.0",
     "contentful-management": "^10.0.0",
     "framer-motion": "^11.0.3",
     "natural": "^6.2.0",
-    "next": "^14.0.0",
+    "next": "^15.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "twitter-api-v2": "^1.14.0",
     "web-push": "^3.5.0"
   },
   "devDependencies": {
+    "@types/natural": "^5.1.5",
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
-    "@types/natural": "^5.18.0",
-    "autoprefixer": "^10.4.14",
+    "autoprefixer": "^10.4.21",
     "eslint": "^8.40.0",
     "eslint-config-next": "^14.0.0",
-    "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.0.4"
   }
 }
