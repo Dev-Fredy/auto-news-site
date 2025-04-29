@@ -1,14 +1,16 @@
-import { NextResponse } from "next/server";
+// app/api/sentry-example-api/route.ts
+import { NextResponse } from 'next/server';
 
-export const dynamic = "force-dynamic";
+// If SentryExampleAPIError is a custom error class, ensure it's defined and imported
 class SentryExampleAPIError extends Error {
-  constructor(message: string | undefined) {
+  constructor(message: string) {
     super(message);
-    this.name = "SentryExampleAPIError";
+    this.name = 'SentryExampleAPIError';
   }
 }
+
 // A faulty API route to test Sentry's error monitoring
 export function GET() {
-  throw new SentryExampleAPIError-+*Error("This error is raised on the backend called by the example page.");
+  throw new SentryExampleAPIError("This error is raised on the backend called by the example page.");
   return NextResponse.json({ data: "Testing Sentry Error..." });
 }
